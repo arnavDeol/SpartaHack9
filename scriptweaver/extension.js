@@ -21,7 +21,27 @@ function activate(context) {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from ScriptWeaver!');
+		vscode.window.showInformationMessage('Loading ScriptWeaver...');
+
+		// Get the active text editor + check if there's an active text editor
+		var editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			vscode.window.showInformationMessage('Error! No active text editor.');
+			return; // No open text editor
+		}
+
+		// Check if the active text editor is Python
+		var activeLang = editor.document.languageId;
+		if (activeLang != "python") {
+			vscode.window.showInformationMessage('Error! ScriptWeaver only works with Python.');
+			return; // No selection
+		}
+		
+		// Get the current selection
+		var selection = editor.selection;
+
+		return selection;
+		
 	});
 
 	context.subscriptions.push(disposable);
